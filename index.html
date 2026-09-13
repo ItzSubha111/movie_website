@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MOVIE DISCOVERY — Discover Movies</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <span class="logo-mark">F</span>
+        <span>MOVIE DISCOVERY</span>
+    </div>
+
+    <nav>
+        <button class="nav-link active" id="discoverBtn">
+            Discover
+        </button>
+
+        <button class="nav-link" id="wishlistBtn">
+            Wishlist
+            <span class="wishlist-count" id="wishlistCount">0</span>
+        </button>
+    </nav>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <span class="eyebrow">YOUR NEXT MOVIE AWAITS</span>
+
+        <h1>
+            Find a story<br>
+            worth watching.
+        </h1>
+
+        <p>
+            Explore thousands of movies, discover hidden gems,
+            and save the ones you never want to forget.
+        </p>
+
+        <div class="hero-actions">
+
+            <button class="primary-btn" id="heroExplore">
+                Explore movies
+                <span>→</span>
+            </button>
+
+            <button class="secondary-btn" id="heroWishlist">
+                ♥ My wishlist
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="hero-movie-info">
+        <span>FEATURED</span>
+        <strong>Interstellar</strong>
+        <small>2014 · Sci-Fi · 8.7 ★</small>
+    </div>
+
+</section>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+    <!-- Search -->
+
+    <section class="search-section">
+
+        <div class="search-box">
+
+            <span class="search-icon">⌕</span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search movies, stories, characters..."
+                autocomplete="off"
+            >
+
+            <span class="search-shortcut">⌘ K</span>
+
+        </div>
+
+    </section>
+
+
+    <!-- Section heading -->
+
+    <section class="section-heading">
+
+        <div>
+            <span class="eyebrow">EXPLORE</span>
+
+            <h2 id="sectionTitle">
+                Trending movies
+            </h2>
+        </div>
+
+        <div class="results-info" id="resultsInfo"></div>
+
+    </section>
+
+
+    <!-- Filters -->
+
+    <section class="filters">
+
+        <div class="genre-chips" id="genreChips">
+
+            <button class="genre-chip active" data-genre="all">
+                All
+            </button>
+
+            <button class="genre-chip" data-genre="28">
+                Action
+            </button>
+
+            <button class="genre-chip" data-genre="12">
+                Adventure
+            </button>
+
+            <button class="genre-chip" data-genre="16">
+                Animation
+            </button>
+
+            <button class="genre-chip" data-genre="35">
+                Comedy
+            </button>
+
+            <button class="genre-chip" data-genre="18">
+                Drama
+            </button>
+
+            <button class="genre-chip" data-genre="14">
+                Fantasy
+            </button>
+
+            <button class="genre-chip" data-genre="27">
+                Horror
+            </button>
+
+            <button class="genre-chip" data-genre="10749">
+                Romance
+            </button>
+
+            <button class="genre-chip" data-genre="878">
+                Sci-Fi
+            </button>
+
+            <button class="genre-chip" data-genre="53">
+                Thriller
+            </button>
+
+        </div>
+
+
+        <select id="sortFilter">
+
+            <option value="popular">
+                Popular
+            </option>
+
+            <option value="rating">
+                Highest rated
+            </option>
+
+            <option value="newest">
+                Newest
+            </option>
+
+            <option value="title">
+                A → Z
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- Movie grid -->
+
+    <section id="movieGrid" class="movie-grid"></section>
+
+
+    <!-- Loading -->
+
+    <div id="loadingState" class="loading-state hidden">
+
+        <div class="spinner"></div>
+
+        <p>Finding something good...</p>
+
+    </div>
+
+
+    <!-- Empty -->
+
+    <div id="emptyState" class="empty-state hidden">
+
+        <div class="empty-icon">◌</div>
+
+        <h3>No movies found</h3>
+
+        <p>
+            Try another search or explore a different genre.
+        </p>
+
+        <button id="resetFilters" class="secondary-btn">
+            Reset filters
+        </button>
+
+    </div>
+
+
+    <!-- Error -->
+
+    <div id="errorState" class="error-state hidden">
+
+        <div class="error-icon">!</div>
+
+        <h3>We couldn't load the movies</h3>
+
+        <p id="errorMessage">
+            Please check that the FRAME backend is running.
+        </p>
+
+        <button id="retryBtn" class="primary-btn">
+            Try again
+        </button>
+
+    </div>
+
+
+    <button id="loadMore" class="load-more hidden">
+        Show more movies
+        <span>↓</span>
+    </button>
+
+</main>
+
+
+<!-- ================= MOVIE MODAL ================= -->
+
+<dialog id="movieDialog">
+
+    <button
+        class="modal-close"
+        id="modalClose"
+        aria-label="Close"
+    >
+        ×
+    </button>
+
+    <div id="dialogContent"></div>
+
+</dialog>
+
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast" class="toast"></div>
+
+
+<footer>
+
+    <div class="footer-logo">
+        MOVIE DISCOVERY
+    </div>
+
+    <p>
+        Discover your next favorite story.
+    </p>
+
+    <span>
+        Powered by TMDB
+    </span>
+
+</footer>
+
+</body>
+</html>
